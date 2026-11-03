@@ -72,7 +72,7 @@
             <h2>Ferramentas de Tomada de Decisão Financeira</h2>
             <p class="introducao">Utilize nossos simuladores interativos para projetar o futuro da sua carteira ou planejar seus movimentos profissionais com exatidão.</p>
 
-            <!-- CALCULADORA 1: JUROS COMPOSTOS TESOURO SELIC -->
+            <!-- JUROS COMPOSTOS TESOURO SELIC -->
             <section class="box-calculadora">
                 <h3>1. Simulador de Aposentadoria Real: Juros Compostos no Tesouro Selic</h3>
                 <p style="margin-bottom: 1.5rem; color: #555;">Descubra como o Tesouro Selic reconstrói seu futuro sem depender do teto ou das regras do INSS.</p>
@@ -98,7 +98,7 @@
                 <div id="resultadoSelic" class="resultado-box" style="display:none;"></div>
             </section>
 
-                        <!-- CALCULADORA 2: TRABALHISTA RESCISÓRIA -->
+                        <!-- TRABALHISTA RESCISÓRIA -->
             <section class="box-calculadora">
                 <h3>2. Calculadora Rescisória Trabalhista</h3>
                 <p style="margin-bottom: 1.5rem; color: #555;">Estime os valores brutos da sua rescisão contratual de acordo com o tipo de desligamento.</p>
@@ -159,24 +159,24 @@
             document.getElementById('resultadoSelic').innerHTML = `Seu patrimônio acumulado no Tesouro Selic após ${anos} anos será de: R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.<br><br><span style="font-size:0.95rem; color:#555; font-weight:normal;">Diferente do INSS, esse capital é seu patrimônio líquido, gerando renda passiva perpétua e transmissível por herança.</span>`;
         }
 
-        // Função auxiliar corrigida e simplificada para ler a data DD/MM/AAAA
+        
 function converterDataBr(valorTexto) {
     if (!valorTexto) return null;
     
-    // Divide o texto pelas barras
+    
     let partes = valorTexto.split('/');
     if (partes.length !== 3) return null;
     
-    // Pega cada pedaço da data de forma segura
+  
     let dia = parseInt(partes[0], 10);
-    let mes = parseInt(partes[1], 10) - 1; // No JS os meses vão de 0 a 11
+    let mes = parseInt(partes[1], 10) - 1; 
     let ano = parseInt(partes[2], 10);
     
     if (isNaN(dia) || isNaN(mes) || isNaN(ano)) return null;
     return new Date(ano, mes, dia);
 }
 
-// Função principal de cálculo da rescisão
+
 function calcularRescisao() {
     try {
         let salarioField = document.getElementById('salarioTrabalhista');
@@ -201,16 +201,16 @@ function calcularRescisao() {
             return;
         }
 
-        // 1. Calcula os dias trabalhados no último mês (Saldo de Salário)
+       
         let diasTrabalhadosNoMes = dataSaida.getDate();
         let saldoSalario = (salario / 30) * diasTrabalhadosNoMes;
 
-        // 2. Calcula o total de meses completos trabalhados no contrato
+        
         let diferencaTempo = Math.abs(dataSaida - dataEntrada);
         let totalDiasContrato = Math.ceil(diferencaTempo / (1000 * 60 * 60 * 24));
         let meses = Math.floor(totalDiasContrato / 30) || 1;
 
-        // 3. Cálculos base de Proporcionais (13º e Férias)
+        
         let mesesProporcionaisAno = dataSaida.getMonth() + 1; 
         if (dataSaida.getDate() < 15) mesesProporcionaisAno--; 
 
@@ -222,7 +222,7 @@ function calcularRescisao() {
 
         let tipoNormalizado = tipo.toLowerCase();
 
-        // 4. Checagem dos tipos de rescisão baseados nas opções do seu HTML
+        
         if (tipoNormalizado === "demissaosemjusta") {
             totalRescisao = saldoSalario + decimoTerceiroProporcional + feriasProporcionais;
             let multaFGTS = (salario * 0.08 * meses) * 0.40; 
