@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas de Simulação | Finanças Blindadas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .box-calculadora {
+            background: #f8f9fa;
+            border: 2px solid #1b4332;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-group input, .form-group select {
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .btn-calc {
+            background-color: #1b4332;
+            color: #fff;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .btn-calc:hover { background-color: #0f2419; }
+        .resultado-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f5e9;
+            border-left: 5px solid #2e7d32;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>Finanças em dia</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="comportamento.html">Mentalidade & Hábitos</a></li>
+                <li><a href="reserva.html">Reserva & Carteira</a></li>
+                <li><a href="calculadoras.html">Ferramentas & Calculadoras</a></li>
+                <li><a href="investimentos.html">Longo Prazo & Ações</a></li>
+                <li><a href="cripto.html">Criptomoedas</a></li>
+                <li><a href="contatos.html">Contatos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="conteudo-artigo">
+            <h2>Ferramentas de Tomada de Decisão Financeira</h2>
+            <p class="introducao">Utilize nossos simuladores interativos para projetar o futuro da sua carteira ou planejar seus movimentos profissionais com exatidão.</p>
+
+            <!-- CALCULADORA 1: JUROS COMPOSTOS TESOURO SELIC -->
+            <section class="box-calculadora">
+                <h3>1. Simulador de Aposentadoria Real: Juros Compostos no Tesouro Selic</h3>
+                <p style="margin-bottom: 1.5rem; color: #555;">Descubra como o Tesouro Selic reconstrói seu futuro sem depender do teto ou das regras do INSS.</p>
+                
+                <div class="form-group">
+                    <label>Aporte Inicial (R$):</label>
+                    <input type="number" id="inicialSelic" value="1000">
+                </div>
+                <div class="form-group">
+                    <label>Aporte Mensal Constante (R$):</label>
+                    <input type="number" id="mensalSelic" value="300">
+                </div>
+                <div class="form-group">
+                    <label>Tempo de Contribuição (em Anos):</label>
+                    <input type="number" id="anosSelic" value="20">
+                </div>
+                <div class="form-group">
+                    <label>Taxa Anual Selic (%):</label>
+                    <input type="number" id="taxaSelic" value="10.75" step="0.01">
+                </div>
+                <button class="btn-calc" onclick="calcularJurosCompostos()">Simular Aposentadoria no Tesouro</button>
+                
+                <div id="resultadoSelic" class="resultado-box" style="display:none;"></div>
+            </section>
+
+                        <!-- CALCULADORA 2: TRABALHISTA RESCISÓRIA -->
+            <section class="box-calculadora">
+                <h3>2. Calculadora Rescisória Trabalhista</h3>
+                <p style="margin-bottom: 1.5rem; color: #555;">Estime os valores brutos da sua rescisão contratual de acordo com o tipo de desligamento.</p>
+                
+                <div class="form-group">
+                    <label>Último Salário Bruto (R$):</label>
+                    <input type="number" id="salarioTrabalhista" value="2500">
+                </div>
+
+                <!-- Bloco de Datas Lado a Lado Corrigido -->
+                <div class="grupo-datas">
+                    <div class="campo-data">
+                        <label for="dataEntrada">Data de Entrada:</label>
+                        <input type="text" id="dataEntrada" name="dataEntrada" placeholder="DD/MM/AAAA">
+                    </div>
+                    
+                    <div class="campo-data">
+                        <label for="dataSaida">Data de Saída:</label>
+                        <input type="text" id="dataSaida" name="dataSaida" placeholder="DD/MM/AAAA">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de Rescisão:</label>
+                    <select id="tipoRescisao">
+                        <option value="demissaoSemJusta">Demissão Sem Justa Causa</option>
+                        <option value="pedidoDemissao">Pedido de Demissão pelo Empregado</option>
+                        <option value="acordoComum">Acordo Comum (Reforma Trabalhista)</option>
+                        <option value="Demissaojustacausa">Demissão Por Justa Causa</option>
+                    </select>
+                </div>
+                
+                <button class="btn-calc" onclick="calcularRescisao()">Calcular Direitos Estimados</button>
+                
+                <div id="resultadoTrabalhista" class="resultado-box" style="display:none;"></div>
+            </section>
+
+    <script>
+        function calcularJurosCompostos() {
+            let principal = parseFloat(document.getElementById('inicialSelic').value) || 0;
+            let aporte = parseFloat(document.getElementById('mensalSelic').value) || 0;
+            let anos = parseInt(document.getElementById('anosSelic').value) || 0;
+            let taxaAnual = parseFloat(document.getElementById('taxaSelic').value) || 0;
+            let stringDataSaida = document.getElementById('dataSaida').value;
+
+
+
+            let meses = anos * 12;
+            let taxaMensal = Math.pow((1 + (taxaAnual / 100)), (1 / 12)) - 1;
+            
+            let total = principal * Math.pow((1 + taxaMensal), meses);
+            
+            for (let i = 1; i <= meses; i++) {
+                total += aporte * Math.pow((1 + taxaMensal), (meses - i));
+            }
+            
+            document.getElementById('resultadoSelic').style.display = 'block';
+            document.getElementById('resultadoSelic').innerHTML = `Seu patrimônio acumulado no Tesouro Selic após ${anos} anos será de: R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.<br><br><span style="font-size:0.95rem; color:#555; font-weight:normal;">Diferente do INSS, esse capital é seu patrimônio líquido, gerando renda passiva perpétua e transmissível por herança.</span>`;
+        }
+
+        // Função auxiliar corrigida e simplificada para ler a data DD/MM/AAAA
+function converterDataBr(valorTexto) {
+    if (!valorTexto) return null;
+    
+    // Divide o texto pelas barras
+    let partes = valorTexto.split('/');
+    if (partes.length !== 3) return null;
+    
+    // Pega cada pedaço da data de forma segura
+    let dia = parseInt(partes[0], 10);
+    let mes = parseInt(partes[1], 10) - 1; // No JS os meses vão de 0 a 11
+    let ano = parseInt(partes[2], 10);
+    
+    if (isNaN(dia) || isNaN(mes) || isNaN(ano)) return null;
+    return new Date(ano, mes, dia);
+}
+
+// Função principal de cálculo da rescisão
+function calcularRescisao() {
+    try {
+        let salarioField = document.getElementById('salarioTrabalhista');
+        let tipoField = document.getElementById('tipoRescisao');
+        let entradaField = document.getElementById('dataEntrada');
+        let saidaField = document.getElementById('dataSaida');
+        let resultadoBox = document.getElementById('resultadoTrabalhista');
+
+        if (!salarioField || !tipoField || !entradaField || !saidaField || !resultadoBox) {
+            alert("Erro interno: Um ou mais campos não foram encontrados no HTML. Verifique os IDs.");
+            return;
+        }
+
+        let salario = parseFloat(salarioField.value) || 0;
+        let tipo = tipoField.value;
+        
+        let dataEntrada = converterDataBr(entradaField.value);
+        let dataSaida = converterDataBr(saidaField.value);
+
+        if (!dataEntrada || !dataSaida || dataSaida < dataEntrada) {
+            alert("Por favor, insira as datas de Entrada e Saída corretamente no formato DD/MM/AAAA.");
+            return;
+        }
+
+        // 1. Calcula os dias trabalhados no último mês (Saldo de Salário)
+        let diasTrabalhadosNoMes = dataSaida.getDate();
+        let saldoSalario = (salario / 30) * diasTrabalhadosNoMes;
+
+        // 2. Calcula o total de meses completos trabalhados no contrato
+        let diferencaTempo = Math.abs(dataSaida - dataEntrada);
+        let totalDiasContrato = Math.ceil(diferencaTempo / (1000 * 60 * 60 * 24));
+        let meses = Math.floor(totalDiasContrato / 30) || 1;
+
+        // 3. Cálculos base de Proporcionais (13º e Férias)
+        let mesesProporcionaisAno = dataSaida.getMonth() + 1; 
+        if (dataSaida.getDate() < 15) mesesProporcionaisAno--; 
+
+        let decimoTerceiroProporcional = (salario / 12) * (mesesProporcionaisAno || 1);
+        let feriasProporcionais = ((salario / 12) * (meses % 12 || 12)) * 1.33;
+        
+        let totalRescisao = 0;
+        let detalhesExtras = "";
+
+        let tipoNormalizado = tipo.toLowerCase();
+
+        // 4. Checagem dos tipos de rescisão baseados nas opções do seu HTML
+        if (tipoNormalizado === "demissaosemjusta") {
+            totalRescisao = saldoSalario + decimoTerceiroProporcional + feriasProporcionais;
+            let multaFGTS = (salario * 0.08 * meses) * 0.40; 
+            totalRescisao += multaFGTS;
+            detalhesExtras = "<br><span style='font-weight:normal; font-size:0.95rem; color:#555;'>Incluso: Saldo de salário, 13º proporcional, Férias proporcionais + 1/3, Saque integral do FGTS + 40% de Multa Rescisória e direito ao Seguro-Desemprego.</span>";
+        
+        } else if (tipoNormalizado === "pedidodemissao") {
+            totalRescisao = saldoSalario + decimoTerceiroProporcional + feriasProporcionais;
+            detalhesExtras = "<br><span style='font-weight:normal; font-size:0.95rem; color:#555;'>Nota: No pedido de demissão você recebe Saldo de Salário, 13º e Férias. Porém, perde o direito ao aviso prévio indenizado, ao saque do FGTS, à multa de 40% e ao seguro-desemprego.</span>";
+        
+        } else if (tipoNormalizado === "acordocomum") {
+            totalRescisao = saldoSalario + decimoTerceiroProporcional + feriasProporcionais;
+            let multaFGTSAcordo = (salario * 0.08 * meses) * 0.20; 
+            totalRescisao += multaFGTSAcordo;
+            detalhesExtras = "<br><span style='font-weight:normal; font-size:0.95rem; color:#555;'>Incluso: Saldo de salário, 13º proporcional, Férias proporcionais + 1/3. Permite saque de até 80% do saldo do seu FGTS + 20% de Multa Rescisória por acordo mútuo.</span>";
+        
+        } else if (tipoNormalizado === "demissaojustacausa") {
+            totalRescisao = saldoSalario; 
+            detalhesExtras = "<br><span style='font-weight:normal; font-size:0.95rem; color:#d32f2f;'>Atenção: Na demissão por justa causa você perde quase todos os direitos, recebendo apenas o saldo dos dias trabalhados neste mês. Não há direito a férias proporcionais, 13º, FGTS ou seguro-desemprego.</span>";
+        }
+
+        // Mostra o resultado na tela
+        resultadoBox.style.display = 'block';
+        resultadoBox.innerHTML = `Valor bruto estimado das verbas rescisórias: R$ ${totalRescisao.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.${detalhesExtras}`;
+    
+    } catch (erro) {
+        alert("Ocorreu um erro interno no cálculo: " + erro.message);
+    }
+}
